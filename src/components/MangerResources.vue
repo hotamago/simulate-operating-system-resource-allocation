@@ -85,6 +85,7 @@ export default {
               ["gpu", 1],
               ["memory", 20],
               ["disk", 1],
+              ["network", 10],
             ],
             moduleMangerResources
           )
