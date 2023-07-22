@@ -130,7 +130,7 @@ export default {
     pathSafeResources() {
       let safe = moduleMangerResources.isSafe();
       if (safe.safe) this.cachePathResource = safe.safeSequence;
-      return this.cachePathResource;
+      return this.cachePathResource.reverse();
     },
     pathSafeResourcesText() {
       let safeSequence = this.pathSafeResources;
@@ -218,11 +218,11 @@ export default {
     },
 
     popSafeResources() {
-      this.cachePathResource.shift();
+      this.cachePathResource.pop();
     },
     acceptFirst: function () {
       let ok = [moduleMangerResources.acceptFirst()];
-      if (ok.every((v) => v)) popSafeResources();
+      if (ok.every((v) => v)) this.popSafeResources();
       return ok.every((v) => v);
     },
     acceptUntilNotSafe: function () {
