@@ -373,7 +373,7 @@ export default {
     <div class="row mt-4">
       <div class="col">
         <h1>
-          Quene requests ({{ lengthProcessorsRequest }})
+          Queue requests ({{ lengthProcessorsRequest }})
           <span class="badge" :class="[isSafeResourcesStyle]">{{
             isSafeResourcesText
           }}</span>
