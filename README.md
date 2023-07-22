@@ -2,6 +2,10 @@
   Simulate operating system resource allocation and banking problem
 
 # How to use
+## Download
+```
+git clone https://github.com/hotamago/simulate-operating-system-resource-allocation.git
+```
 ## Install
 ```
 npm i
