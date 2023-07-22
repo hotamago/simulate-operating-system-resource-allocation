@@ -127,9 +127,6 @@ export default {
         Object.fromEntries(moduleMangerResources.processorsRequest)
       ).length;
     },
-    popSafeResources() {
-      this.cachePathResource.pop();
-    },
     pathSafeResources() {
       let safe = moduleMangerResources.isSafe();
       if (safe.safe) this.cachePathResource = safe.safeSequence;
@@ -220,14 +217,23 @@ export default {
       return ok.every((v) => v);
     },
 
+    popSafeResources() {
+      this.cachePathResource.shift();
+    },
     acceptFirst: function () {
       let ok = [moduleMangerResources.acceptFirst()];
       if (ok.every((v) => v)) popSafeResources();
       return ok.every((v) => v);
     },
     acceptUntilNotSafe: function () {
-      let ok = [moduleMangerResources.acceptUntilNotSafe()];
-      if (ok.every((v) => v)) popSafeResources();
+      let ok = [];
+      while (1) {
+        ok.push(moduleMangerResources.acceptFirst());
+        if (ok[ok.length - 1] == false) {
+          ok.pop();
+          break;
+        }
+      }
       return ok.every((v) => v);
     },
     loopRandomDelay: function (fun, minDelay, maxDelay) {
