@@ -112,6 +112,7 @@ export default {
         default: "Error!",
       },
       simulateLoop: null,
+      cachePathResource: [],
     };
   },
   computed: {
@@ -126,9 +127,13 @@ export default {
         Object.fromEntries(moduleMangerResources.processorsRequest)
       ).length;
     },
+    popSafeResources() {
+      this.cachePathResource.pop();
+    },
     pathSafeResources() {
       let safe = moduleMangerResources.isSafe();
-      return safe.safeSequence;
+      if (safe.safe) this.cachePathResource = safe.safeSequence;
+      return this.cachePathResource;
     },
     pathSafeResourcesText() {
       let safeSequence = this.pathSafeResources;
@@ -149,7 +154,7 @@ export default {
       return this.isSafeResources == true ? "bg-success" : "bg-danger";
     },
     isSafeResourcesText() {
-      return this.isSafeResources == true ? "Safe" : "Not Safe";
+      return this.isSafeResources == true ? "OK" : "Waiting";
     },
     isWarning() {
       return this.warningContentDisplay != "";
@@ -217,12 +222,12 @@ export default {
 
     acceptFirst: function () {
       let ok = [moduleMangerResources.acceptFirst()];
-
+      if (ok.every((v) => v)) popSafeResources();
       return ok.every((v) => v);
     },
     acceptUntilNotSafe: function () {
       let ok = [moduleMangerResources.acceptUntilNotSafe()];
-
+      if (ok.every((v) => v)) popSafeResources();
       return ok.every((v) => v);
     },
     loopRandomDelay: function (fun, minDelay, maxDelay) {
